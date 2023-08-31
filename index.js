@@ -22,7 +22,7 @@ const characterRoutes = require('./routes/characters')
 app.use(userRoutes);
 app.use(characterRoutes);
 
-app.all('*', (res, res) => {
+app.all('*', (req, res) => {
     res.status(404).json({message: 'Cette route n\'existe pas'})
 })
 
