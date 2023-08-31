@@ -4,6 +4,7 @@ const router = express.Router();
 const axios = require('axios')
 
 router.get("/characters", async (req, res) => {
+    console.log('lala')
     try {
       // let name = "";
       // if (req.query.name) {
