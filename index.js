@@ -27,6 +27,5 @@ app.all('*', (req, res) => {
 })
 
 app.listen(process.env.PORT, () => {
-    res.status(200).json({message: 'Server has started'})
     console.log('Server has started')
 })
