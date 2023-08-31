@@ -15,6 +15,7 @@ router.get("/characters", async (req, res) => {
       // - req.query.name si il existe
       // - "" sinon
       // (revient au même que faire ce qu'il y a au dessus)
+      console.log(req.query)
       const name = req.query.name || "";
       const skip = req.query.skip || 0;
       const limit = req.query.limit || 100;
