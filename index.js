@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 // DB setup
-mongoose.connect('mongodb://127.0.0.1:27017/marvel');
+mongoose.connect(process.env.MONGODB_URI);
 
 // j'importe mes routes
 const userRoutes = require("./routes/user");
