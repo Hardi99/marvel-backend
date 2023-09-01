@@ -11,8 +11,11 @@ const User = require("../models/User");
 
 router.post("/user/signup", async (req, res) => {
   try {
-    const { username, email, password } = req.body;
-    if (username && email && password) {
+    const { username, email, password, checkPassword } = req.body;
+    if (password !== checkPassword) {
+      res.status(400).json({ error: "Vos 2 mots de passe ne sont pas identiques" });
+    }
+    else if (username && email && password && checkPassword) {
       // si username email et password existent, alors je vérifie s'il ne sont pas déjà utilisé en base de donnée
       const usernameToFind = await User.findOne({ username: username });
       const emailToFind = await User.findOne({ email: email });
@@ -40,6 +43,33 @@ router.post("/user/signup", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+/* VOICI LA BONNE FACON DE FAIRE UN LOGIN !! A NE PAS OUBLIER */
+
+router.post("/user/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    
+    const userFound = await User.findOne({ email: email });
+    
+    if (userFound) {
+        let newSaltedPassword = password + userFound.salt;
+        let newHash = SHA256(newSaltedPassword).toString(encBase64);
+
+        if (newHash === userFound.hash) {
+          res.status(200).json(userFound);
+        } else {
+          console.log(newHash)
+          res.status(400).json({ error: "Invalid email or password" });
+        }
+      } else if (!email || !password) {
+        res.status(400).json({ error: "Missing parameters" });
+      }
+    } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+  
 });
 
 module.exports = router;

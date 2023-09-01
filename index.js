@@ -12,7 +12,8 @@ app.use(cors());
 // peut-on utiliser les 2 en une ligne
 app.use(express.json());
 
-mongoose.connect("mongodb+srv://HardiTabuna:z26L7KMglhWQM0bi@cluster0.ggqumlb.mongodb.net/");
+// DB setup
+mongoose.connect('mongodb://127.0.0.1:27017/marvel');
 
 // j'importe mes routes
 const userRoutes = require("./routes/user");
@@ -26,6 +27,6 @@ app.all('*', (req, res) => {
     res.status(404).json({message: 'Cette route n\'existe pas'})
 })
 
-app.listen(process.env.PORT, () => {
+app.listen(3000, () => {
     console.log('Server has started')
 })
