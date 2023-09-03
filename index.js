@@ -17,16 +17,18 @@ mongoose.connect(process.env.MONGODB_URI);
 
 // j'importe mes routes
 const userRoutes = require("./routes/user");
-const characterRoutes = require('./routes/characters')
+const characterRoutes = require('./routes/characters');
+const comicRoutes = require('./routes/comics');
 
 // je les utilises
 app.use(userRoutes);
 app.use(characterRoutes);
+app.use(comicRoutes);
 
 app.all('*', (req, res) => {
     res.status(404).json({message: 'Cette route n\'existe pas'})
 })
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log('Server has started')
 })

@@ -31,4 +31,20 @@ router.get("/characters", async (req, res) => {
     }
   });
 
+  router.get("/character/:id", async (req, res) => {
+      try {
+        console.log(req.params)
+        const id = req.params.id || "";
+    
+        // J'interroge le backend du reacteur en envoyant la clef API et les différents query
+        const response = await axios.get(
+          `https://lereacteur-marvel-api.herokuapp.com/character/${id}?apiKey=${process.env.API_KEY}`
+        );
+        // Je renvoie le data au front
+        res.json(response.data);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
+    });
+
   module.exports = router;
